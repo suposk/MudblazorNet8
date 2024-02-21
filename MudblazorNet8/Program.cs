@@ -11,6 +11,11 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddMudServices();
 
+var Configuration = builder.Configuration;
+var Secret = Configuration["Secret"];
+Secret = $"{Secret}.Server.Modified.{DateTime.Now}";
+Configuration["Secret"] = Secret;
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
