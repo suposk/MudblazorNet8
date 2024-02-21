@@ -1,6 +1,7 @@
 using MudblazorNet8.Client.Pages;
 using MudblazorNet8.Components;
 using MudBlazor.Services;
+using SharedComponents.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(SharedComponentsClass).Assembly)
     .AddAdditionalAssemblies(typeof(Counter).Assembly);
 
 app.Run();
