@@ -9,9 +9,12 @@
 <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
 <MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
 
-@if (forecasts == null)
+@if (forecasts == null || isLoading)
 {
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    <MudStack Row=true>
+        <MudProgressCircular Color="Color.Default" Indeterminate=@isLoading />
+        <MudText>Loading ...</MudText>
+    </MudStack>
 }
 else
 {
@@ -28,6 +31,18 @@ else
             <MudTd DataLabel="Temp. (F)">@context.TemperatureF</MudTd>
             <MudTd DataLabel="Summary">@context.Summary</MudTd>
         </RowTemplate>
+		<ToolBarContent>
+			@if (!isLoading)
+			{
+				<MudText Typo="Typo.h6" GutterBottom="true">Items: (@forecasts?.Count)</MudText>
+			}
+			<MudSpacer />
+			<MudButton Disabled="@isLoading" OnClick="@RefreshAsync"
+						Color="Color.Primary"
+						Size="@Size.Small"
+						Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Refresh">Refresh</MudButton>
+			<MudSpacer />
+		</ToolBarContent>
         <PagerContent>
             <MudTablePager PageSizeOptions="new int[]{ 10, 50, 100}" />
         </PagerContent>
@@ -35,14 +50,25 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private List<WeatherForecast>? forecasts;
     private bool isLoading = false;
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadAsync();
+    }
+
+    protected async Task RefreshAsync()
+    {
+        await LoadAsync();
+    }
+
+    protected async Task LoadAsync()
+    {
+        forecasts = null;
         isLoading = true;
         // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+        await Task.Delay(1500);
 
         var startDate = DateOnly.FromDateTime(DateTime.Now);
         var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
@@ -51,7 +77,7 @@ else
             Date = startDate.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+        }).ToList();
 
         isLoading = false;
     }
