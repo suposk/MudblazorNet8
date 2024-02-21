@@ -10,7 +10,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\MudblazorNet8.Client\MudblazorNet8.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
