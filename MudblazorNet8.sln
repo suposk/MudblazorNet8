@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudblazorNet8", "MudblazorN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudblazorNet8.Client", "MudblazorNet8.Client\MudblazorNet8.Client.csproj", "{A227093B-E8A5-411B-A700-8DB72CA66797}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedComponents", "SharedComponents\SharedComponents.csproj", "{BC6FFFAC-F49C-4D22-960E-A81616349693}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,18 @@ Global
 		{A227093B-E8A5-411B-A700-8DB72CA66797}.Release|x64.Build.0 = Release|Any CPU
 		{A227093B-E8A5-411B-A700-8DB72CA66797}.Release|x86.ActiveCfg = Release|Any CPU
 		{A227093B-E8A5-411B-A700-8DB72CA66797}.Release|x86.Build.0 = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|x64.Build.0 = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC6FFFAC-F49C-4D22-960E-A81616349693}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
