@@ -1,9 +1,17 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace SharedComponents.Components;
 
 public class WeatherCompBase: ComponentBase
 {
+    [Inject]
+    public ILogger<WeatherCompBase>? Logger { get; set; }
+
+    [Inject]
+    public ISnackbar? Snackbar { get; set; }
+
     protected bool dense = true;
     protected bool hover = true;
     protected bool bordered = false;
@@ -32,16 +40,25 @@ public class WeatherCompBase: ComponentBase
     public bool IsLoading { get; set; } = false;
     protected int ItemsToShowCount { get; set; } = 500;
 
-    protected override async Task OnInitializedAsync() => await LoadAsync();
+    /// <summary>
+    /// Main method is called when the component is first rendered.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        Logger?.LogInformation("OnInitializedAsync started");
+        await LoadAsync();
+    }
 
     protected async Task RefreshAsync()
-    {
+    {        
         SearchString = "";
         await LoadAsync();
     }
 
     protected async Task LoadAsync()
     {
+        Logger?.LogInformation("LoadAsync started with {1} items to load", ItemsToShowCount);
         Collection = new();
         IsLoading = true;
         StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
@@ -58,6 +75,7 @@ public class WeatherCompBase: ComponentBase
         }).ToList();
 
         IsLoading = false;
+        Snackbar?.Add($"Loaded {ItemsToShowCount} items", Severity.Success);
         StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
     }
 }

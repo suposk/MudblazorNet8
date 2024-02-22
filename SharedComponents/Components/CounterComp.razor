@@ -1,4 +1,5 @@
-﻿<PageTitle>Shared Counter - @Type</PageTitle>
+﻿@using Microsoft.Extensions.Logging
+<PageTitle>Shared Counter - @Type</PageTitle>
 
 <MudText Color=Color.Primary> Shared Counter</MudText>
 
@@ -13,6 +14,9 @@
     [Parameter]
     public string? Type { get; set; }
 
+    [Inject]
+    public ILogger<CounterComp>? Logger { get; set; }
+
     private int currentCount = 0;
     protected static int totalCount = 0;
 
@@ -20,6 +24,8 @@
     {
         currentCount++;
         totalCount++;        
-        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
+        Logger?.LogInformation($"Current count = {1}, Total = {2}", currentCount, totalCount);
+        
+        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component        
     }
 }

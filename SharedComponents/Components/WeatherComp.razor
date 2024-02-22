@@ -32,11 +32,12 @@
     </MudItem>
 
     <MudItem md="4" xs="12">
-        <MudNumericField @bind-Value="ItemsToShowCount" @bind-Value:after="LoadAsync"
-                            Label="# of Items to Show also delay" Variant="Variant.Text" Clearable=true
-                            Class="d-flex mud-width-full"
-                            Immediate=true DebounceInterval="900" Step="1000"
-                            Disabled=@IsLoading Min="50" Max="10000" />
+        <MudNumericField @bind-Value="ItemsToShowCount" 
+                         @bind-Value:after="LoadAsync"
+                         Label="# of Items to Show also delay" Variant="Variant.Text" Clearable=true
+                         Class="d-flex mud-width-full"
+                         Immediate=true DebounceInterval="900" Step="1000"
+                         Disabled=@IsLoading Min="50" Max="10000" />
     </MudItem>
 
 </MudGrid>
@@ -77,5 +78,5 @@
 
 
 @code {
-
+    //some UI related code can be here
 }
