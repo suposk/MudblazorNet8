@@ -31,7 +31,7 @@
 
     <MudItem md="4" xs="12">
         <MudNumericField @bind-Value="itemsToShow" @bind-Value:after="LoadAsync"
-                            Label="# of Items" Variant="Variant.Text" Clearable=true
+                            Label="# of Items to Show also delay" Variant="Variant.Text" Clearable=true
                             Class="d-flex mud-width-full"
                             Immediate=true DebounceInterval="900" Step="1000"
                             Disabled=@isLoading Min="50" Max="10000" />
@@ -63,7 +63,7 @@
 	</ToolBarContent>
    
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{ 10, 50, 100, 1000 }" />
+        <MudTablePager PageSizeOptions="new int[]{ 5, 10, 50, 100, 1000 }" />
     </PagerContent>
 </MudTable>
 
