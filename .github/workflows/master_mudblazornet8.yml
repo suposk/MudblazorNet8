@@ -12,6 +12,7 @@ on:
     - "**/*.gitignore"
     - "**/*.gitattributes"
     - "**/*MudblazorNet8.MauiHybridApp"
+    - "**/*MudblazorNet8.MauiHybridApp.csproj"
   workflow_dispatch:
 
 jobs:
