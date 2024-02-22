@@ -1,4 +1,6 @@
-﻿<MudText Color=Color.Primary> Shared Counter</MudText>
+﻿<PageTitle>Shared Counter - @Type</PageTitle>
+
+<MudText Color=Color.Primary> Shared Counter</MudText>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Type: @Type</MudText>
 <MudText Typo="Typo.h3" GutterBottom="true">Shared Counter</MudText>
@@ -18,5 +20,6 @@
     {
         currentCount++;
         totalCount++;        
+        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
     }
 }
