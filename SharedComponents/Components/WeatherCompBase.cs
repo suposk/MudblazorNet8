@@ -57,7 +57,7 @@ public class WeatherCompBase: ComponentBase
         Logger?.LogInformation("LoadAsync started with {1} items to load", ItemsToShowCount);
         Collection = new();
         IsLoading = true;
-        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
+       // StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
         // Simulate asynchronous loading to demonstrate streaming rendering
         await Task.Delay(ItemsToShowCount);
 
@@ -72,7 +72,7 @@ public class WeatherCompBase: ComponentBase
 
         IsLoading = false;
         Snackbar?.Add($"Loaded {ItemsToShowCount} items", Severity.Success);
-        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
+        //StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
     }
 }
 
