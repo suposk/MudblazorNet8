@@ -8,7 +8,7 @@
         <MudText>Loading ...</MudText>
     </MudStack>
 }
-<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" RowsPerPage=@rowsPerPage Loading=@isLoading 
+<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" @bind-RowsPerPage=@rowsPerPage Loading=@isLoading 
         Dense="@dense" Hover="@hover" Bordered="@bordered"
         Virtualize=true
         Filter="new Func<WeatherForecast,bool>(FilterFunc)"
@@ -50,7 +50,7 @@
         <MudNumericField 
             @bind-Value="itemsToShow" @bind-Value:after="LoadAsync"
             Label="# of Items To Show/Load" Variant="Variant.Text" Clearable=true 
-            Immediate=true DebounceInterval="900"
+            Immediate=true DebounceInterval="900" Step="1000"
             Disabled=@isLoading Min="50" Max="10000" />
 	</ToolBarContent>
     <PagerContent>
@@ -71,6 +71,7 @@
     protected bool bordered = false;
     protected int rowsPerPage = 10;
     protected string searchString = "";
+
     private bool FilterFunc(WeatherForecast item) => FilterFuncSearch(item, searchString);
     private bool FilterFuncSearch(WeatherForecast item, string searchString)
     {
