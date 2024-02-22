@@ -1,17 +1,19 @@
-﻿<MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
+﻿@inherits WeatherCompBase //Logic moved to class WeatherCompBase, to separate logic from UI
+
+<MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
 <MudText Class="mb-8">This component demonstrates fetching data from the server. This Should be .........  .......</MudText>
 
-@if (isLoading)
+@if (IsLoading)
 {
     <MudStack Row=true>
-        <MudProgressCircular Color="Color.Primary" Indeterminate=@isLoading />
+        <MudProgressCircular Color="Color.Primary" Indeterminate=@IsLoading />
         <MudText>Loading ...</MudText>
     </MudStack>
 }
 
 <MudGrid Class="align-baseline m-2">
     <MudItem md="4" xs="12">
-        <MudButton Disabled="@isLoading"
+        <MudButton Disabled="@IsLoading"
                     OnClick="@RefreshAsync"
                     Class="d-flex mud-width-full"                       
                     Color="Color.Primary"                    
@@ -22,7 +24,7 @@
     </MudItem>
 
     <MudItem md="4" xs="12">
-        <MudTextField @bind-Value="searchString" Placeholder="Search" 
+        <MudTextField @bind-Value="SearchString" Placeholder="Search" 
                         Immediate="true" DebounceInterval="300" Clearable="true"
                         Class="d-flex mud-width-full"
                         Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium">
@@ -30,17 +32,17 @@
     </MudItem>
 
     <MudItem md="4" xs="12">
-        <MudNumericField @bind-Value="itemsToShow" @bind-Value:after="LoadAsync"
+        <MudNumericField @bind-Value="ItemsToShowCount" @bind-Value:after="LoadAsync"
                             Label="# of Items to Show also delay" Variant="Variant.Text" Clearable=true
                             Class="d-flex mud-width-full"
                             Immediate=true DebounceInterval="900" Step="1000"
-                            Disabled=@isLoading Min="50" Max="10000" />
+                            Disabled=@IsLoading Min="50" Max="10000" />
     </MudItem>
 
 </MudGrid>
 
 
-<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" @bind-RowsPerPage=@rowsPerPage Loading=@isLoading 
+<MudTable Items="Collection" SortLabel="Sort By" Elevation="1" @bind-RowsPerPage=@RowsPerPage Loading=@IsLoading 
         Dense="@dense" Hover="@hover" Bordered="@bordered"
         Virtualize=true
         Filter="new Func<WeatherForecast,bool>(FilterFunc)"
@@ -59,7 +61,7 @@
     </RowTemplate>
 
 	<ToolBarContent>
-        <MudText Typo="Typo.h6" Color=Color.Primary GutterBottom="true">Items: (@forecasts?.Count)</MudText>		
+        <MudText Typo="Typo.h6" Color=Color.Primary GutterBottom="true">Items: (@Collection?.Count)</MudText>		
 	</ToolBarContent>
    
     <PagerContent>
@@ -75,68 +77,5 @@
 
 
 @code {
-    protected bool dense = true;
-    protected bool hover = true;
-    protected bool bordered = false;
-    protected int rowsPerPage = 10;
-    protected string searchString = "";
 
-    private bool FilterFunc(WeatherForecast item) => FilterFuncSearch(item, searchString);
-    private bool FilterFuncSearch(WeatherForecast item, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (item.Summary is not null && item.Summary.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (item.TemperatureC.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (item.TemperatureF.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (item.Date.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{item.Date} {item.TemperatureC} {item.TemperatureF}".Contains(searchString))
-            return true;
-        return false;
-    }
-
-    private List<WeatherForecast>? forecasts = new();
-    protected bool isLoading = false;
-    protected int itemsToShow = 500;
-
-    protected override async Task OnInitializedAsync() => await LoadAsync();    
-
-    protected async Task RefreshAsync() 
-    {
-        searchString = "";
-        await LoadAsync();    
-    }
-
-    protected async Task LoadAsync()
-    {
-        forecasts = new();
-        isLoading = true;
-        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(itemsToShow);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, itemsToShow).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToList();
-
-        isLoading = false;
-        StateHasChanged(); // Not always needed, but it's a good practice to call this method after changing the state of the component
-    }
-
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
 }
