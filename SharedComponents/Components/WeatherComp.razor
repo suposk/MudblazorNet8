@@ -8,8 +8,9 @@
         <MudText>Loading ...</MudText>
     </MudStack>
 }
-<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" RowsPerPage="10" Loading=@isLoading 
+<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" RowsPerPage=@rowsPerPage Loading=@isLoading 
         Dense="@dense" Hover="@hover" Bordered="@bordered"
+        Virtualize=true
         Filter="new Func<WeatherForecast,bool>(FilterFunc)"
         >
     <HeaderContent>
@@ -58,9 +59,9 @@
 </MudTable>
 
 <div class="d-flex flex-wrap mt-4">
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>    
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSwitch @bind-Value="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Value="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Value="@bordered" Color="Color.Warning">Bordered</MudSwitch>
 </div>
 
 
@@ -68,6 +69,7 @@
     protected bool dense = true;
     protected bool hover = true;
     protected bool bordered = false;
+    protected int rowsPerPage = 10;
     protected string searchString = "";
     private bool FilterFunc(WeatherForecast item) => FilterFuncSearch(item, searchString);
     private bool FilterFuncSearch(WeatherForecast item, string searchString)
