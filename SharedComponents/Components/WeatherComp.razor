@@ -8,7 +8,10 @@
         <MudText>Loading ...</MudText>
     </MudStack>
 }
-<MudTable Items="forecasts" Dense=true Hover="true" SortLabel="Sort By" Elevation="1" RowsPerPage="10" Loading=@isLoading>
+<MudTable Items="forecasts" SortLabel="Sort By" Elevation="1" RowsPerPage="10" Loading=@isLoading 
+        Dense="@dense" Hover="@hover" Bordered="@bordered"
+        Filter="new Func<WeatherForecast,bool>(FilterFunc)"
+        >
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<WeatherForecast, object>(x=>x.Date)">Date</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.TemperatureC)">Temp. (C)</MudTableSortLabel></MudTh>
@@ -33,28 +36,68 @@
             Size="@Size.Small"
             Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Refresh">Refresh
         </MudButton>
+        <MudSpacer />
+
+        <MudTextField 
+            @bind-Value="searchString" Placeholder="Search"
+            Immediate="true" DebounceInterval="300" Clearable="true"
+            Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" 
+            Class="mt-0">
+        </MudTextField>
 		<MudSpacer />
+        
         <MudNumericField 
             @bind-Value="itemsToShow" @bind-Value:after="LoadAsync"
             Label="# of Items To Show/Load" Variant="Variant.Text" Clearable=true 
             Immediate=true DebounceInterval="900"
             Disabled=@isLoading Min="50" Max="10000" />
-        <MudSpacer />
 	</ToolBarContent>
     <PagerContent>
         <MudTablePager PageSizeOptions="new int[]{ 10, 50, 100, 1000 }" />
     </PagerContent>
 </MudTable>
 
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>    
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+</div>
+
 
 @code {
+    protected bool dense = true;
+    protected bool hover = true;
+    protected bool bordered = false;
+    protected string searchString = "";
+    private bool FilterFunc(WeatherForecast item) => FilterFuncSearch(item, searchString);
+    private bool FilterFuncSearch(WeatherForecast item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (item.Summary is not null && item.Summary.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (item.TemperatureC.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (item.TemperatureF.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (item.Date.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{item.Date} {item.TemperatureC} {item.TemperatureF}".Contains(searchString))
+            return true;
+        return false;
+    }
+
     private List<WeatherForecast>? forecasts = new();
     protected bool isLoading = false;
     protected int itemsToShow = 500;
 
     protected override async Task OnInitializedAsync() => await LoadAsync();    
 
-    protected async Task RefreshAsync() => await LoadAsync();    
+    protected async Task RefreshAsync() 
+    {
+        searchString = "";
+        await LoadAsync();    
+    }
 
     protected async Task LoadAsync()
     {
