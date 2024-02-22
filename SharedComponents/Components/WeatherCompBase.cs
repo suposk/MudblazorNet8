@@ -10,12 +10,8 @@ public class WeatherCompBase: ComponentBase
     public ILogger<WeatherCompBase>? Logger { get; set; }
 
     [Inject]
-    public ISnackbar? Snackbar { get; set; }
-
-    protected bool dense = true;
-    protected bool hover = true;
-    protected bool bordered = false;
-    public int RowsPerPage { get; set; } = 10;
+    public ISnackbar? Snackbar { get; set; }     
+    
     public string SearchString { get; set; } = "";
 
     protected bool FilterFunc(WeatherForecast item) => FilterFuncSearch(item, SearchString);
