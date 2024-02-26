@@ -19,7 +19,7 @@
 
         <BlazorWebView Grid.Row="1" x:Name="blazorWebView2" HostPage="wwwroot/comp.html">
             <BlazorWebView.RootComponents>
-                <RootComponent Selector="#app" ComponentType="{x:Type localSharedComponents:CounterWrapperComp}" />
+                <RootComponent Selector="#app" ComponentType="{x:Type local:Components.BlazorRoute}" />
             </BlazorWebView.RootComponents>
         </BlazorWebView>
 
