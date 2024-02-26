@@ -69,4 +69,10 @@
       <ProjectReference Include="..\SharedComponents\SharedComponents.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiXaml Update="XamlControls\CounterCw.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+    </ItemGroup>
+
 </Project>
