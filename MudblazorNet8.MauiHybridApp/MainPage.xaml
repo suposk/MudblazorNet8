@@ -3,20 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MudblazorNet8.MauiHybridApp"
              xmlns:localXaml="clr-namespace:MudblazorNet8.MauiHybridApp.XamlControls"
-             x:Class="MudblazorNet8.MauiHybridApp.MainPage"
+             xmlns:localSharedComponents="clr-namespace:SharedComponents.Components;assembly=SharedComponents"            x:Class="MudblazorNet8.MauiHybridApp.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
         <localXaml:CounterCw Grid.Row="0">
             
         </localXaml:CounterCw>
-        
+
+        <BlazorWebView Grid.Row="1" x:Name="blazorWebView2" HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type localSharedComponents:CounterComp}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+
         <BlazorWebView Grid.Row="2" x:Name="blazorWebView" HostPage="wwwroot/index.html">
             <BlazorWebView.RootComponents>
                 <RootComponent Selector="#app" ComponentType="{x:Type local:Components.Routes}" />
