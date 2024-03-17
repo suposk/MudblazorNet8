@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MudblazorNet8.MauiHybridApp"
              xmlns:localXaml="clr-namespace:MudblazorNet8.MauiHybridApp.XamlControls"
-             xmlns:localSharedComponents="clr-namespace:SharedComponents.Components;assembly=SharedComponents"            x:Class="MudblazorNet8.MauiHybridApp.MainPage"
+             xmlns:localSharedComponents="clr-namespace:SharedComponents.Components;assembly=SharedComponents"            
+             x:Class="MudblazorNet8.MauiHybridApp.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
